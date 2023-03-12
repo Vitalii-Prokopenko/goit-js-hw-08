@@ -2,8 +2,6 @@ import throttle from 'lodash.throttle';
 
 const form = document.querySelector('.feedback-form');
 
-// form.elements.email.removeAttribute('autofocus');
-
 const FORM_STATE_STORAGE_KEY = 'feedback-form-state';
 
 let formSavedData = {};
@@ -15,7 +13,6 @@ if (localStorage.getItem(FORM_STATE_STORAGE_KEY)) {
 
   form.elements.email.textContent = formSavedData.emailInputValue;
   form.elements.message.textContent = formSavedData.messageInputValue;
-  //   console.log(form.elements.email.value);
 }
 console.log(formSavedData);
 
