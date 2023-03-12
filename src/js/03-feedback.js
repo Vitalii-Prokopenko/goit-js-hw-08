@@ -4,49 +4,54 @@ const form = document.querySelector('.feedback-form');
 
 const FORM_STATE_STORAGE_KEY = 'feedback-form-state';
 
-let formSavedData = {};
-
-console.log(localStorage.getItem(FORM_STATE_STORAGE_KEY));
+let formSavedData = {
+  email: '',
+  message: '',
+};
 
 if (localStorage.getItem(FORM_STATE_STORAGE_KEY)) {
   formSavedData = JSON.parse(localStorage.getItem(FORM_STATE_STORAGE_KEY));
 
-  form.elements.email.textContent = formSavedData.emailInputValue;
-  form.elements.message.textContent = formSavedData.messageInputValue;
+  form.elements.email.value = formSavedData.email;
+  form.elements.message.value = formSavedData.message;
 }
-console.log(formSavedData);
+
+// Function to handle input events
 
 const handleInput = event => {
   const {
     elements: { email, message },
   } = event.currentTarget;
 
-  formSavedData.emailInputValue = email.value;
-  formSavedData.messageInputValue = message.value;
-
-  console.log(formSavedData);
+  formSavedData.email = email.value;
+  formSavedData.message = message.value;
 
   localStorage.setItem(FORM_STATE_STORAGE_KEY, JSON.stringify(formSavedData));
 
-  //   const SaveData = formSavedData => {
-  //     console.log(1);
-  //     localStorage.setItem(FORM_STATE_STORAGE_KEY, JSON.stringify(formSavedData));
-  //   };
-
-  //   myThrottle(formSavedData => {
-  //     console.log(1);
-  //     localStorage.setItem(FORM_STATE_STORAGE_KEY, JSON.stringify(formSavedData));
-  //   }, 500);
-  //   console.log(localStorage.getItem(FORM_STATE_STORAGE_KEY));
+  // const saveInLocalStorage = () => {
+  //   localStorage.setItem(FORM_STATE_STORAGE_KEY, JSON.stringify(formSavedData));
+  // };
+  // throttle(saveInLocalStorage, 2000);
 };
+
+// Function to handle submit event
 
 const handleSubmit = event => {
   event.preventDefault();
+
+  const {
+    elements: { email, message },
+  } = event.currentTarget;
+
   console.log(formSavedData);
-  localStorage.setItem(FORM_STATE_STORAGE_KEY, '');
-  form.elements.email.textContent = '';
-  form.elements.message.textContent = '';
+
+  localStorage.removeItem(FORM_STATE_STORAGE_KEY);
+
+  email.value = '';
+  message.value = '';
 };
 
-form.addEventListener('input', handleInput);
+form.addEventListener('input', throttle(handleInput, 2000));
+// form.addEventListener('input', handleInput);
+
 form.addEventListener('submit', handleSubmit);
