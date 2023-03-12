@@ -31,7 +31,7 @@ const handleInput = event => {
   // const saveInLocalStorage = () => {
   //   localStorage.setItem(FORM_STATE_STORAGE_KEY, JSON.stringify(formSavedData));
   // };
-  // throttle(saveInLocalStorage, 2000);
+  // throttle(saveInLocalStorage, 300);
 };
 
 // Function to handle submit event
@@ -51,7 +51,7 @@ const handleSubmit = event => {
   message.value = '';
 };
 
-form.addEventListener('input', throttle(handleInput, 2000));
+form.addEventListener('input', throttle(handleInput, 300));
 // form.addEventListener('input', handleInput);
 
 form.addEventListener('submit', handleSubmit);
