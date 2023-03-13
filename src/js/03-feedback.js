@@ -19,6 +19,10 @@ if (localStorage.getItem(FORM_STATE_STORAGE_KEY)) {
 // Function to handle input events
 
 const handleInput = event => {
+  if (!event.currentTarget) {
+    return;
+  }
+
   const {
     elements: { email, message },
   } = event.currentTarget;
@@ -27,11 +31,6 @@ const handleInput = event => {
   formSavedData.message = message.value;
 
   localStorage.setItem(FORM_STATE_STORAGE_KEY, JSON.stringify(formSavedData));
-
-  // const saveInLocalStorage = () => {
-  //   localStorage.setItem(FORM_STATE_STORAGE_KEY, JSON.stringify(formSavedData));
-  // };
-  // throttle(saveInLocalStorage, 300);
 };
 
 // Function to handle submit event
@@ -52,6 +51,4 @@ const handleSubmit = event => {
 };
 
 form.addEventListener('input', throttle(handleInput, 300));
-// form.addEventListener('input', handleInput);
-
 form.addEventListener('submit', handleSubmit);
